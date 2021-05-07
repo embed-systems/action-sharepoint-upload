@@ -1,0 +1,39 @@
+# action.yml
+name: 'Upload to Sharepoint'
+description: 'Upload an artifact to a Sharepoint library'
+author: 'Michal Kaczmarek'
+branding:
+  icon: 'upload-cloud'  
+  color: 'orange'
+inputs:
+  site_url: 
+    description: 'The Sharepoint site url'
+    required: true
+  sharepoint_user: 
+    description: 'User name to use for authentication'
+    required: true
+  sharepoint_password: 
+    description: 'Password to use for authentication'
+    required: true
+  destination_folder: 
+    description: 'The path where to upload on remote server'
+    required: true
+    default: 'Shared documents'
+  local_file:
+    description: 'Location of the file to upload'
+    required: true
+  remote_file:
+    description: 'Name of file on remote server'
+    required: false
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    SITE_URL : ${{ inputs.site_url }}
+    USER : ${{ inputs.sharepoint_user }}
+    PASS: ${{ inputs.sharepoint_password }}
+    DESTINATION : ${{ inputs.destination_folder }}
+    FILE : ${{ inputs.local_file }}
+    FILE_ON_SERVER : ${{ inputs.remote_file }}
+    
